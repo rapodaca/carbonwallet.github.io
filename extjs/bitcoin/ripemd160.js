@@ -21,7 +21,12 @@
     UTF8 = charenc.UTF8,
     Binary = charenc.Binary;
 
-	// Convert a byte array to little-endian 32-bit words
+	/**
+	 * Convert a byte array to little-endian 32-bit words
+   *
+   * @param {number[]} bytes
+   * @return {number[]}
+   */
 	util.bytesToLWords = function (bytes) {
 
 		var output = Array(bytes.length >> 2);
@@ -32,7 +37,12 @@
 		return output;
 	};
 
-	// Convert little-endian 32-bit words to a byte array
+	/**
+	 * Convert little-endian 32-bit words to a byte array
+	 * 
+	 * @param {number[]} words
+	 * @param {number[]}
+	 */
 	util.lWordsToBytes = function (words) {
 		var output = [];
 		for (var i = 0; i < words.length * 32; i += 8)
@@ -40,7 +50,13 @@
 		return output;
 	};
 
-	// Public API
+	/**
+	 * Public API
+	 *
+	 * @param {string} message
+	 * @param {object} [options]
+	 * @return {string}
+	 */
 	var RIPEMD160 = C.RIPEMD160 = function (message, options) {
 		var digestbytes = util.lWordsToBytes(RIPEMD160._rmd160(message));
 		return options && options.asBytes ? digestbytes :

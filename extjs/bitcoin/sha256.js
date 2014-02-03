@@ -31,7 +31,13 @@ var K = [ 0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
           0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
           0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2 ];
 
-// Public API
+/**
+ * Public API
+ * 
+ * @param {string} message
+ * @param {object} [options]
+ * @return {string}
+ */
 var SHA256 = C.SHA256 = function (message, options) {
   var digestbytes = util.wordsToBytes(SHA256._sha256(message));
 	return options && options.asBytes ? digestbytes :
