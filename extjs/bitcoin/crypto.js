@@ -14,17 +14,34 @@ var Crypto = window.Crypto = {};
 // Crypto utilities
 var util = Crypto.util = {
 
-	// Bit-wise rotate left
+	/**
+	 * Bit-wise rotate left
+	 *
+	 * @param {number} n - the number of positions by which to rotate
+	 * @param {number} b - the bits to rotate
+	 * @return {number}
+	 */
 	rotl: function (n, b) {
 		return (n << b) | (n >>> (32 - b));
 	},
 
-	// Bit-wise rotate right
+	/**
+	 * Bit-wise rotate right
+	 *
+	 * @param {number} n - the number of positions by which to rotate
+	 * @param {number} b - the bits to rotate
+	 * @return {number}
+	 */
 	rotr: function (n, b) {
 		return (n << (32 - b)) | (n >>> b);
 	},
 
-	// Swap big-endian to little-endian and vice versa
+	/**
+	 * Swap big-endian to little-endian and vice versa
+	 *
+	 * @param {number|number[]} - the bits to switch
+	 * @return {number}
+	 */
 	endian: function (n) {
 
 		// If number given, swap endian
@@ -48,21 +65,36 @@ var util = Crypto.util = {
 		return bytes;
 	},*/
 
-	// Convert a byte array to big-endian 32-bit words
+	/**
+	 * Convert a byte array to big-endian 32-bit words
+	 * 
+	 * @param {number[]} bytes
+	 * @return {number[]}
+	 */
 	bytesToWords: function (bytes) {
 		for (var words = [], i = 0, b = 0; i < bytes.length; i++, b += 8)
 			words[b >>> 5] |= bytes[i] << (24 - b % 32);
 		return words;
 	},
 
-	// Convert big-endian 32-bit words to a byte array
+	/**
+	 * Convert big-endian 32-bit words to a byte array
+	 * 
+	 * @param {number[]} words
+	 * @return {number[]}
+	 */
 	wordsToBytes: function (words) {
 		for (var bytes = [], b = 0; b < words.length * 32; b += 8)
 			bytes.push((words[b >>> 5] >>> (24 - b % 32)) & 0xFF);
 		return bytes;
 	},
 
-	// Convert a byte array to a hex string
+	/**
+	 * Convert a byte array to a hex string
+	 *
+	 * @param {number[]}
+	 * @return {string}
+   */
 	bytesToHex: function (bytes) {
 		for (var hex = [], i = 0; i < bytes.length; i++) {
 			hex.push((bytes[i] >>> 4).toString(16));
@@ -71,14 +103,24 @@ var util = Crypto.util = {
 		return hex.join("");
 	},
 
-	// Convert a hex string to a byte array
+	/**
+	 * Convert a hex string to a byte array
+   * 
+   * @param {string}
+   * @return {number[]}
+   */
 	hexToBytes: function (hex) {
 		for (var bytes = [], c = 0; c < hex.length; c += 2)
 			bytes.push(parseInt(hex.substr(c, 2), 16));
 		return bytes;
 	},
 
-	// Convert a byte array to a base-64 string
+	/**
+	 * Convert a byte array to a base-64 string
+   *
+   * @param {number[]} bytes
+   * @return {string}
+   */
 	bytesToBase64: function (bytes) {
 
 		// Use browser-native function if it exists
@@ -97,7 +139,12 @@ var util = Crypto.util = {
 
 	},
 
-	// Convert a base-64 string to a byte array
+	/**
+	 * Convert a base-64 string to a byte array
+   * 
+   * @param {string}
+   * @return {number[]}
+   */
 	base64ToBytes: function (base64) {
 
 		// Use browser-native function if it exists
@@ -127,12 +174,22 @@ var charenc = Crypto.charenc = {};
 // UTF-8 encoding
 var UTF8 = charenc.UTF8 = {
 
-	// Convert a string to a byte array
+	/**
+	 * Convert a string to a byte array
+   *
+   * @param {string} str
+   * @return {number[]}
+   */
 	stringToBytes: function (str) {
 		return Binary.stringToBytes(unescape(encodeURIComponent(str)));
 	},
 
-	// Convert a byte array to a string
+	/**
+	 * Convert a byte array to a string
+   *
+   * @param {number[]} bytes
+   * @return {string}
+   */
 	bytesToString: function (bytes) {
 		return decodeURIComponent(escape(Binary.bytesToString(bytes)));
 	}
@@ -142,14 +199,23 @@ var UTF8 = charenc.UTF8 = {
 // Binary encoding
 var Binary = charenc.Binary = {
 
-	// Convert a string to a byte array
+	/**
+	 * Convert a string into a byte array
+	 * 
+	 * @param {string} str
+	 */
 	stringToBytes: function (str) {
 		for (var bytes = [], i = 0; i < str.length; i++)
 			bytes.push(str.charCodeAt(i));
 		return bytes;
 	},
 
-	// Convert a byte array to a string
+	/**
+	 * Convert a byte array to a string
+	 *
+	 * @param {number[]} bytes
+	 * @return {string}
+	 */
 	bytesToString: function (bytes) {
 		for (var str = [], i = 0; i < bytes.length; i++)
 			str.push(String.fromCharCode(bytes[i]));
