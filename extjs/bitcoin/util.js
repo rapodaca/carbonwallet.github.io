@@ -6,6 +6,8 @@ BigInteger.valueOf = nbv;
  *
  * This returns the absolute of the contained value in big endian
  * form. A value of zero results in an empty array.
+ *
+ * @return {number[]}
  */
 BigInteger.prototype.toByteArrayUnsigned = function () {
   var ba = this.abs().toByteArray();
@@ -27,6 +29,8 @@ BigInteger.prototype.toByteArrayUnsigned = function () {
  *
  * This function will interpret a byte array as a big integer in big
  * endian notation and ignore leading zeros.
+ *
+ * @return {BigInteger}
  */
 BigInteger.fromByteArrayUnsigned = function (ba) {
   if (!ba.length) {
@@ -63,6 +67,8 @@ BigInteger.fromByteArrayUnsigned = function (ba) {
  * -16300 =>   0xbfac
  *  62300 => 0x00f35c
  * -62300 => 0x80f35c
+ *
+ * @return {number[]}
  */
 BigInteger.prototype.toByteArraySigned = function () {
   var val = this.abs().toByteArrayUnsigned();
@@ -87,6 +93,9 @@ BigInteger.prototype.toByteArraySigned = function () {
  * Parse a signed big integer byte representation.
  *
  * For details on the format please see BigInteger.toByteArraySigned.
+ *
+ * @param {number[]} ba
+ * @return {BigInteger}
  */
 BigInteger.fromByteArraySigned = function (ba) {
   // Check for negative value
@@ -114,6 +123,9 @@ for (var i = 0; i < names.length; ++i)
 Bitcoin.Util = {
   /**
    * Cross-browser compatibility version of Array.isArray.
+   *
+   * @param {object}
+   * @return {boolean}
    */
   isArray: Array.isArray || function(o)
   {
@@ -122,6 +134,9 @@ Bitcoin.Util = {
 
   /**
    * Create an array of a certain length filled with a specific value.
+   *
+   * @param {number} len
+   * @param {object} val
    */
   makeFilledArray: function (len, val)
   {
@@ -139,6 +154,9 @@ Bitcoin.Util = {
    * "var_int" is a variable length integer used by Bitcoin's binary format.
    *
    * Returns a byte array.
+   *
+   * @param {number} i
+   * @return {number[]}
    */
   numToVarInt: function (i)
   {
@@ -159,6 +177,9 @@ Bitcoin.Util = {
 
   /**
    * Parse a Bitcoin value byte array, returning a BigInteger.
+   *
+   * @param {number[]} valueBuffer
+   * @return {BigInteger}
    */
   valueToBigInt: function (valueBuffer)
   {
@@ -179,6 +200,9 @@ Bitcoin.Util = {
    * 0.1234
    * 900.99998888
    * 34.00
+   *
+   * @param {number[]} valueBuffer
+   * @return {string}
    */
   formatValue: function (valueBuffer) {
     var value = this.valueToBigInt(valueBuffer).toString();
@@ -196,6 +220,9 @@ Bitcoin.Util = {
    * Keep in mind that parsing user input is messy. You should always display
    * the parsed value back to the user to make sure we understood his input
    * correctly.
+   *
+   * @param {string} valueString
+   * @return {BigInteger}
    */
   parseValue: function (valueString) {
     // TODO: Detect other number formats (e.g. comma as decimal separator)
@@ -215,6 +242,9 @@ Bitcoin.Util = {
    *
    * Takes an arbitrary byte array as inputs and returns the hash as a byte
    * array.
+   *
+   * @param {number[]} data
+   * @return {number[]}
    */
   sha256ripe160: function (data) {
     return Crypto.RIPEMD160(Crypto.SHA256(data, {asBytes: true}), {asBytes: true});
