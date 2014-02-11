@@ -52,6 +52,7 @@ describe("ECPointFp", function() {
       }
       
       implTestTwice(fp.p);
+      expect(fp.p[0].twice().validate()).toBe(true);
     });
   });
   describe("test all points", function() {

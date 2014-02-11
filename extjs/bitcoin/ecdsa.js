@@ -10,10 +10,17 @@ function integerToBytes(i, len) {
   return bytes;
 };
 
+/**
+ * @return {number}
+ */
 ECFieldElementFp.prototype.getByteLength = function () {
   return Math.floor((this.toBigInteger().bitLength() + 7) / 8);
 };
 
+/**
+ * @param {boolean} compressed
+ * @return {number[]}
+ */
 ECPointFp.prototype.getEncoded = function (compressed) {
   var x = this.getX().toBigInteger();
   var y = this.getY().toBigInteger();
@@ -41,6 +48,11 @@ ECPointFp.prototype.getEncoded = function (compressed) {
   return enc;
 };
 
+/**
+ * @param {ECCurveFp} curve
+ * @param {number[]} enc
+ * @return {ECPointFp}
+ */
 ECPointFp.decodeFrom = function (curve, enc) {
   var type = enc[0];
   var dataLen = enc.length-1;

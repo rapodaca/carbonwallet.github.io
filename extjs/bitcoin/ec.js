@@ -7,7 +7,11 @@
 // ----------------
 // ECFieldElementFp
 
-// constructor
+/**
+ * @constructor
+ * @param {BigInteger} q
+ * @param {BigInteger} x
+ */
 function ECFieldElementFp(q,x) {
     this.x = x;
     // TODO if(x.compareTo(q) >= 0) error
